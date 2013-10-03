@@ -60,6 +60,14 @@ if &t_Co > 2 || has("gui_running")
   set hlsearch
 endif
 
+filetype off
+
+set rtp+=~/.vim/bundle/vundle/
+
+call vundle#rc()
+
+filetype plugin indent on
+
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
 
@@ -67,10 +75,10 @@ if has("autocmd")
   " Use the default filetype settings, so that mail gets 'tw' set to 72,
   " 'cindent' is on in C files, etc.
   " Also load indent files, to automatically do language-dependent indenting.
-  filetype off
-  call pathogen#infect()
-  call pathogen#helptags()
-  filetype plugin indent on
+"  filetype off
+"  call pathogen#infect()
+"  call pathogen#helptags()
+"  filetype plugin indent on
 
   " Put these in an autocmd group, so that we can delete them easily.
   augroup vimrcEx
@@ -124,4 +132,8 @@ if !exists(":DiffOrig")
 endif
 
 set t_Co=256
+
+Bundle 'sk1418/last256'
+Bundle 'scrooloose/nerdtree'
+Bundle 'jistr/vim-nerdtree-tabs'
 colorscheme last256
