@@ -114,13 +114,6 @@ inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
 
-nnoremap <Tab> <Esc>
-vnoremap <Tab> <Esc>gV
-onoremap <Tab> <Esc>
-inoremap <Tab> <Esc>`^
-inoremap <Leader><Tab> <Tab>
-
-inoremap <C-@> <Esc>
 map <F2> :NERDTreeTabsToggle<CR>
 
 " Convenient command to see the difference between the current buffer and the

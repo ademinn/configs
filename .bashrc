@@ -7,6 +7,7 @@ if [ "$TERM" == "xterm" ]; then
     export TERM=xterm-256color
 fi
 PATH=$HOME/bin:$PATH
+export EDITOR=vim
 [ -z "$PS1" ] && return
 
 # don't put duplicate lines or lines starting with space in the history.
