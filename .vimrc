@@ -62,12 +62,6 @@ endif
 
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/
-
-call vundle#rc()
-
-filetype plugin indent on
-
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
 
@@ -126,7 +120,11 @@ endif
 
 set t_Co=256
 
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 Bundle 'sk1418/last256'
 Bundle 'scrooloose/nerdtree'
 Bundle 'jistr/vim-nerdtree-tabs'
+call vundle#end()
+filetype plugin indent on
 colorscheme last256
