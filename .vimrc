@@ -15,6 +15,8 @@ if v:progname =~? "evim"
   finish
 endif
 
+set shell=/bin/sh
+
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
@@ -69,10 +71,6 @@ if has("autocmd")
   " Use the default filetype settings, so that mail gets 'tw' set to 72,
   " 'cindent' is on in C files, etc.
   " Also load indent files, to automatically do language-dependent indenting.
-"  filetype off
-"  call pathogen#infect()
-"  call pathogen#helptags()
-"  filetype plugin indent on
 
   " Put these in an autocmd group, so that we can delete them easily.
   augroup vimrcEx
@@ -120,11 +118,40 @@ endif
 
 set t_Co=256
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Bundle 'sk1418/last256'
-Bundle 'scrooloose/nerdtree'
-Bundle 'jistr/vim-nerdtree-tabs'
-call vundle#end()
+" set rtp+=~/.vim/bundle/Vundle.vim
+set runtimepath+=~/.vim/bundle/neobundle.vim/
+call neobundle#begin(expand('~/.vim/bundle/'))
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+NeoBundle 'sk1418/last256'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'jistr/vim-nerdtree-tabs'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'AfterColors.vim'
+
+NeoBundle 'Shougo/vimproc.vim'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/vimshell.vim'
+" NeoBundle 'Shougo/neocomplcache.vim'
+NeoBundle 'eagletmt/ghcmod-vim'
+NeoBundle 'eagletmt/neco-ghc'
+NeoBundle 'lukerandall/haskellmode-vim'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'dag/vim2hs'
+NeoBundle 'wting/rust.vim'
+
+NeoBundle 'Valloric/YouCompleteMe', {
+    \ 'build' : {
+    \     'unix' : './install.sh --clang-completer --system-libclang'
+    \ }
+    \}
+call neobundle#end()
 filetype plugin indent on
+
+NeoBundleCheck
+
 colorscheme last256
+" let g:neocomplcache_enable_at_startup = 1
+let g:haddock_browser = 'chromium'
+let g:syntastic_auto_loc_list=1
+let g:ycm_semantic_triggers = {'haskell' : ['.']}
