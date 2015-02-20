@@ -5,7 +5,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="risto"
+# ZSH_THEME="risto"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -51,7 +51,7 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH="/home/ademinn/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
+export PATH=$HOME/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -105,3 +105,7 @@ bindkey -M vicmd 'j' history-beginning-search-forward
 zmodload zsh/terminfo
 bindkey "$terminfo[kcuu1]" history-beginning-search-backward
 bindkey "$terminfo[kcud1]" history-beginning-search-forward
+
+PROMPT="%{$fg_bold[green]%}[%n@%M] %{$fg_bold[blue]%}[%~]
+%(?..%{$fg_bold[red]%}<%?> )%(!.%{$fg_bold[red]%}#.%{$fg_bold[green]%}$) "
+RPROMPT="%{$fg_bold[yellow]%}[%*]%{$reset_color%}"
