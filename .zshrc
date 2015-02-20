@@ -45,7 +45,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git hg svn)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -83,6 +83,9 @@ alias la='LC_COLLATE="C" ls -AlF --group-directories-first'
 alias ll='la'
 alias lx='ls -lXF --group-directories-first'
 
+alias topu="top -u $USER"
+alias htopu="htop -u $USER"
+
 # Disable circling over menu items after double <TAB>
 setopt noautomenu
 setopt nomenucomplete
@@ -106,6 +109,19 @@ zmodload zsh/terminfo
 bindkey "$terminfo[kcuu1]" history-beginning-search-backward
 bindkey "$terminfo[kcud1]" history-beginning-search-forward
 
-PROMPT="%{$fg_bold[green]%}[%n@%M] %{$fg_bold[blue]%}[%~]
-%(?..%{$fg_bold[red]%}<%?> )%(!.%{$fg_bold[red]%}#.%{$fg_bold[green]%}$) "
-RPROMPT="%{$fg_bold[yellow]%}[%*]%{$reset_color%}"
+# VCS customization
+setopt promptsubst
+autoload -U add-zsh-hook
+autoload -Uz vcs_info
+
+# Add hook for calling vcs_info before each command.
+add-zsh-hook precmd vcs_info
+
+zstyle ':vcs_info:*' enable git hg svn
+zstyle ':vcs_info:*:*' max-exports 4
+zstyle ':vcs_info:*:*' formats "%{$fg_bold[cyan]%}|%s:%r| (%b) [%S]" "[" "%R" "] "
+zstyle ':vcs_info:*:*' nvcsformats "%{$fg_bold[blue]%}[%~]" "" "" ""
+
+PROMPT="%{$fg_bold[green]%}[%n@%M] "'${vcs_info_msg_0_}'"
+%(?..%{$fg_bold[red]%}<%?> )%(!.%{$fg_bold[red]%}#.%{$fg_bold[green]%}$)%{$reset_color%} "
+RPROMPT="%{$fg_bold[blue]%}"'${vcs_info_msg_1_}${(D)vcs_info_msg_2_}${vcs_info_msg_3_}'"%{$fg_bold[yellow]%}[%*]%{$reset_color%}"
