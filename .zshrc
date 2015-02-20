@@ -90,7 +90,9 @@ alias htopu="htop -u $USER"
 setopt noautomenu
 setopt nomenucomplete
 
-# Enable vim mode
+setopt promptsubst
+
+# Enable vi mode
 bindkey -v
 
 bindkey "^W" backward-kill-word    # vi-backward-kill-word
@@ -99,18 +101,26 @@ bindkey "^U" kill-line             # vi-kill-line
 bindkey "^?" backward-delete-char  # vi-backward-delete-char
 
 # History search
-# Vim mode
+# Vi mode
 bindkey -M vicmd 'k' history-beginning-search-backward
 bindkey -M vicmd 'j' history-beginning-search-forward
 
-# Search with arrows. Works in ArchLinux.
-# Solution found here: https://github.com/robbyrussell/oh-my-zsh/issues/1433
-zmodload zsh/terminfo
-bindkey "$terminfo[kcuu1]" history-beginning-search-backward
-bindkey "$terminfo[kcud1]" history-beginning-search-forward
+# Vi mode indicator
+vi_mode="insert"
+
+zle-keymap-select() {
+  vi_mode="insert"
+  [[ $KEYMAP = vicmd ]] && vi_mode="normal"
+  () { return $__prompt_status }
+  zle reset-prompt
+}
+zle-line-init() {
+  typeset -g __prompt_status="$?"
+}
+zle -N zle-keymap-select
+zle -N zle-line-init
 
 # VCS customization
-setopt promptsubst
 autoload -U add-zsh-hook
 autoload -Uz vcs_info
 
@@ -122,6 +132,6 @@ zstyle ':vcs_info:*:*' max-exports 4
 zstyle ':vcs_info:*:*' formats "%{$fg_bold[cyan]%}|%s:%r| (%b) [%S]" "[" "%R" "] "
 zstyle ':vcs_info:*:*' nvcsformats "%{$fg_bold[blue]%}[%~]" "" "" ""
 
-PROMPT="%{$fg_bold[green]%}[%n@%M] "'${vcs_info_msg_0_}'"
+PROMPT="%{$fg_bold[green]%}[%n@%M] %{$fg_bold[magenta]%}("'${vi_mode}'") "'${vcs_info_msg_0_}'"
 %(?..%{$fg_bold[red]%}<%?> )%(!.%{$fg_bold[red]%}#.%{$fg_bold[green]%}$)%{$reset_color%} "
 RPROMPT="%{$fg_bold[blue]%}"'${vcs_info_msg_1_}${(D)vcs_info_msg_2_}${vcs_info_msg_3_}'"%{$fg_bold[yellow]%}[%*]%{$reset_color%}"
