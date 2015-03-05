@@ -105,6 +105,21 @@ bindkey "^?" backward-delete-char  # vi-backward-delete-char
 bindkey -M vicmd 'k' history-beginning-search-backward
 bindkey -M vicmd 'j' history-beginning-search-forward
 
+# Custom colors (vim last256 color scheme)
+COLOR_GREEN=$FG[071]
+COLOR_RED=$FG[167]
+COLOR_GREY=$FG[240]
+COLOR_YELLOW=$FG[221]
+COLOR_BLUE=$FG[069]
+COLOR_PURPLE=$FG[105]
+
+PROMPT_COLOR_PATH=$COLOR_BLUE
+PROMPT_COLOR_VCS=$COLOR_PURPLE
+PROMPT_COLOR_ERROR=$COLOR_RED
+PROMPT_COLOR_MODE=$COLOR_GREY
+PROMPT_COLOR_TIME=$COLOR_YELLOW
+PROMPT_COLOR_USER="%(!.$COLOR_RED.$COLOR_GREEN)"
+
 # Vi mode indicator
 vi_mode="insert"
 
@@ -129,9 +144,10 @@ add-zsh-hook precmd vcs_info
 
 zstyle ':vcs_info:*' enable git hg svn
 zstyle ':vcs_info:*:*' max-exports 4
-zstyle ':vcs_info:*:*' formats "%{$fg_bold[cyan]%}|%s:%r| (%b) [%S]" "[" "%R" "] "
-zstyle ':vcs_info:*:*' nvcsformats "%{$fg_bold[blue]%}[%~]" "" "" ""
+zstyle ':vcs_info:*:*' formats "%{$PROMPT_COLOR_VCS%}|%s:%r| (%b) [%S]" "[" "%R" "] "
+zstyle ':vcs_info:*:*' nvcsformats "%{$PROMPT_COLOR_PATH%}[%~]" "" "" ""
 
-PROMPT="%{$fg_bold[green]%}[%n@%M] %{$fg_bold[magenta]%}("'${vi_mode}'") "'${vcs_info_msg_0_}'"
-%(?..%{$fg_bold[red]%}<%?> )%(!.%{$fg_bold[red]%}#.%{$fg_bold[green]%}$)%{$reset_color%} "
-RPROMPT="%{$fg_bold[blue]%}"'${vcs_info_msg_1_}${(D)vcs_info_msg_2_}${vcs_info_msg_3_}'"%{$fg_bold[yellow]%}[%*]%{$reset_color%}"
+
+PROMPT="%{$PROMPT_COLOR_USER%}[%n@%M]%{$reset_color%} %{$PROMPT_COLOR_MODE%}("'${vi_mode}'")%{$reset_color%} "'${vcs_info_msg_0_}'"%{$reset_color%}
+%(?..%{$PROMPT_COLOR_ERROR%}<%?> )%{$reset_color%}%{$PROMPT_COLOR_USER%}%(!.#.$)%{$reset_color%} "
+RPROMPT="%{$PROMPT_COLOR_PATH%}"'${vcs_info_msg_1_}${(D)vcs_info_msg_2_}${vcs_info_msg_3_}'"%{$reset_color%}%{$PROMPT_COLOR_TIME%}[%*]%{$reset_color%}"
