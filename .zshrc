@@ -111,10 +111,12 @@ COLOR_RED=$FG[167]
 COLOR_GREY=$FG[240]
 COLOR_YELLOW=$FG[221]
 COLOR_BLUE=$FG[069]
-COLOR_PURPLE=$FG[105]
+COLOR_AQUA=$FG[111]
+COLOR_ORANGE=$FG[172]
 
 PROMPT_COLOR_PATH=$COLOR_BLUE
-PROMPT_COLOR_VCS=$COLOR_PURPLE
+PROMPT_COLOR_VCS=$COLOR_ORANGE
+PROMPT_COLOR_VCS_PATH=$COLOR_AQUA
 PROMPT_COLOR_ERROR=$COLOR_RED
 PROMPT_COLOR_MODE=$COLOR_GREY
 PROMPT_COLOR_TIME=$COLOR_YELLOW
@@ -144,10 +146,10 @@ add-zsh-hook precmd vcs_info
 
 zstyle ':vcs_info:*' enable git hg svn
 zstyle ':vcs_info:*:*' max-exports 4
-zstyle ':vcs_info:*:*' formats "%{$PROMPT_COLOR_VCS%}|%s:%r| (%b) [%S]" "[" "%R" "] "
+zstyle ':vcs_info:*:*' formats "%B%{$PROMPT_COLOR_VCS%}|%s:%r| (%b) %{$PROMPT_COLOR_VCS_PATH%}[%S]" "[" "%R" "] "
 zstyle ':vcs_info:*:*' nvcsformats "%{$PROMPT_COLOR_PATH%}[%~]" "" "" ""
 
 
-PROMPT="%{$PROMPT_COLOR_USER%}[%n@%M]%{$reset_color%} %{$PROMPT_COLOR_MODE%}("'${vi_mode}'")%{$reset_color%} "'${vcs_info_msg_0_}'"%{$reset_color%}
+PROMPT="%{$PROMPT_COLOR_USER%}[%n@%M]%{$reset_color%} %{$PROMPT_COLOR_MODE%}("'${vi_mode}'")%{$reset_color%} "'${vcs_info_msg_0_}'"%b%{$reset_color%}
 %(?..%{$PROMPT_COLOR_ERROR%}<%?> )%{$reset_color%}%{$PROMPT_COLOR_USER%}%(!.#.$)%{$reset_color%} "
 RPROMPT="%{$PROMPT_COLOR_PATH%}"'${vcs_info_msg_1_}${(D)vcs_info_msg_2_}${vcs_info_msg_3_}'"%{$reset_color%}%{$PROMPT_COLOR_TIME%}[%*]%{$reset_color%}"
