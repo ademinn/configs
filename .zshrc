@@ -51,7 +51,7 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -154,7 +154,8 @@ add-zsh-hook precmd vcs_info
 
 zstyle ':vcs_info:*' enable git hg svn
 zstyle ':vcs_info:*:*' max-exports 4
-zstyle ':vcs_info:*:*' formats "%B%{$PROMPT_COLOR_VCS%}|%s:%r| (%b) %{$PROMPT_COLOR_VCS_PATH%}[%S]" "[" "%R" "] "
+zstyle ':vcs_info:svn:*' formats "%B%{$PROMPT_COLOR_VCS%}|%s:%b| %{$PROMPT_COLOR_VCS_PATH%}[%~]"
+zstyle ':vcs_info:(git|hg):*' formats "%B%{$PROMPT_COLOR_VCS%}|%s:%r| (%b) %{$PROMPT_COLOR_VCS_PATH%}[%S]" "[" "%R" "] "
 zstyle ':vcs_info:*:*' nvcsformats "%{$PROMPT_COLOR_PATH%}[%~]" "" "" ""
 
 
